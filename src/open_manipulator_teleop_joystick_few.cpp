@@ -244,7 +244,10 @@ if (present_kinematic_position_.at(0) < 0.345 && present_kinematic_position_.at(
   { 
     printf("\n\nClose to object 2; \tPress 'START' to grasp autonomously\n");
   }
-  
+  if (present_kinematic_position_.at(0) < 0.208 && present_kinematic_position_.at(0) > 0.122 && present_kinematic_position_.at(1) < 0.159 && present_kinematic_position_.at(1) > 0.091 && present_kinematic_position_.at(2) < 0.100)
+    { 
+      printf("\n\nClose to object 3: \tPress 'START' to grab object\n");
+    }
   printf("Present kinematics_pose: %f", present_kinematic_position_.at(0));
   printf("BACK button    : Quit\n");
   

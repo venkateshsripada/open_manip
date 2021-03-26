@@ -261,7 +261,12 @@ void OpenManipulatorTeleop::printText()
       if (char inp = std::getchar() == 'p')
         {grasp();}
     }
-
+  if (getPresentKinematicsPose().at(0) < 0.208 && getPresentKinematicsPose().at(0) > 0.122 && getPresentKinematicsPose().at(1) < 0.159 && getPresentKinematicsPose().at(1) > 0.091 && getPresentKinematicsPose().at(2) < 0.100)
+    { 
+      printf("\n\nClose to object 3: \tPress 'P' to grab object\n");
+      if (char inp = std::getchar() == 'p')
+        {grasp();}
+    }
 }
 
 void OpenManipulatorTeleop::setGoal(char ch)
