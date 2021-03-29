@@ -239,15 +239,6 @@ void OpenManipulatorTeleop::printText()
   printf("       \n");
   printf("r to quit\n");
   printf("---------------------------\n");
-  printf("Present Joint Angle J1: %.3lf J2: %.3lf J3: %.3lf J4: %.3lf\n",
-         getPresentJointAngle().at(0),
-         getPresentJointAngle().at(1),
-         getPresentJointAngle().at(2),
-         getPresentJointAngle().at(3));
-  printf("Present Kinematics Position X: %.3lf Y: %.3lf Z: %.3lf\n",
-         getPresentKinematicsPose().at(0),
-         getPresentKinematicsPose().at(1),
-         getPresentKinematicsPose().at(2));
   printf("---------------------------\n");
   if (getPresentKinematicsPose().at(0) < 0.256 && getPresentKinematicsPose().at(0) > 0.179 && getPresentKinematicsPose().at(1) < -0.034 && getPresentKinematicsPose().at(1) > -0.098 && getPresentKinematicsPose().at(2) < 0.100)
     { 
@@ -274,45 +265,45 @@ void OpenManipulatorTeleop::setGoal(char ch)
   std::vector<double> goalPose;  goalPose.resize(3, 0.0);
   std::vector<double> goalJoint; goalJoint.resize(NUM_OF_JOINT, 0.0);
 
-  if (ch == 'w' || ch == 'W')
+  if (ch == 'd')   // d
   {
-    printf("input : w \tincrease(++) x axis in task space\n");
+    printf("input : d \tincrease(++) y axis in task space\n");
     goalPose.at(0) = DELTA;
     setTaskSpacePathFromPresentPositionOnly(goalPose, PATH_TIME);
   }
-  else if (ch == 's' || ch == 'S')
+  else if (ch == 'a')    // a
   {
-    printf("input : s \tdecrease(--) x axis in task space\n");
+    printf("input : a \tdecrease(--) y axis in task space\n");
     goalPose.at(0) = -DELTA;
     setTaskSpacePathFromPresentPositionOnly(goalPose, PATH_TIME);
   }
-  else if (ch == 'a')
+  else if (ch == 'w' || ch == 'W')   // w
   {
-    printf("input : a \tincrease(++) y axis in task space\n");
+    printf("input : w \tincrease(++) x axis in task space\n");
     goalPose.at(1) = DELTA;
     setTaskSpacePathFromPresentPositionOnly(goalPose, PATH_TIME);
   }
-  else if (ch == 'd')
+  else if (ch == 's' || ch == 'S')   // s
   {
-    printf("input : d \tdecrease(--) y axis in task space\n");
+    printf("input : s \tdecrease(--) x axis in task space\n");
     goalPose.at(1) = -DELTA;
     setTaskSpacePathFromPresentPositionOnly(goalPose, PATH_TIME);
   }
-  else if (ch == 'A')
+  else if (ch == 'A')   // UP
   {
-    printf("input : z \tincrease(++) z axis in task space\n");
+    printf("input : UP arrow \tincrease(++) z axis in task space\n");
     goalPose.at(2) = VERTICAL_DELTA;
     setTaskSpacePathFromPresentPositionOnly(goalPose, PATH_TIME);
   }
-  else if (ch == 'B')
+  else if (ch == 'B')   // DOWN
   {
-    printf("input : x \tdecrease(--) z axis in task space\n");
+    printf("input : DOWN arrow \tdecrease(--) z axis in task space\n");
     goalPose.at(2) = -VERTICAL_DELTA;
     setTaskSpacePathFromPresentPositionOnly(goalPose, PATH_TIME);
   }
-  else if (ch == 'D')   // CCW
+  else if (ch == 'D')   // CCW (LEFT key)
   {
-    printf("input : y \tincrease(++) joint 1 angle\n");
+    printf("input : LEFT arrow \tincrease(++) joint 1 angle\n");
     std::vector<std::string> joint_name;
     joint_name.push_back("joint1"); goalJoint.at(0) = JOINT_DELTA;
     joint_name.push_back("joint2");
@@ -320,9 +311,9 @@ void OpenManipulatorTeleop::setGoal(char ch)
     joint_name.push_back("joint4");
     setJointSpacePathFromPresent(joint_name, goalJoint, PATH_TIME);
   }
-  else if (ch == 'C')   // CW
+  else if (ch == 'C')   // CW  (RIGHT key)
   {
-    printf("input : h \tdecrease(--) joint 1 angle\n");
+    printf("input : RIGHT arrow \tdecrease(--) joint 1 angle\n");
     std::vector<std::string> joint_name;
     joint_name.push_back("joint1"); goalJoint.at(0) = -JOINT_DELTA;
     joint_name.push_back("joint2");
@@ -330,17 +321,17 @@ void OpenManipulatorTeleop::setGoal(char ch)
     joint_name.push_back("joint4");
     setJointSpacePathFromPresent(joint_name, goalJoint, PATH_TIME);
   }
-  else if (ch == 'z' || ch == 'Z')
+  else if (ch == 'z' || ch == 'Z')    // z
   {
-    printf("input : g \topen gripper\n");
+    printf("input : z \topen gripper\n");
     std::vector<double> joint_angle;
 
     joint_angle.push_back(0.01);
     setToolControl(joint_angle);
   }
-  else if (ch == 'x' || ch == 'X')
+  else if (ch == 'x' || ch == 'X')    // x
   {
-    printf("input : f \tclose gripper\n");
+    printf("input : x \tclose gripper\n");
     std::vector<double> joint_angle;
     joint_angle.push_back(-0.01);
     setToolControl(joint_angle);
@@ -363,7 +354,7 @@ void OpenManipulatorTeleop::setGoal(char ch)
     joint_name.push_back("joint4"); joint_angle.push_back(0.70);
     setJointSpacePath(joint_name, joint_angle, path_time);
   }
-  else if (ch == '1')
+  else if (ch == '1')     // 1
   {
     printf("input : 1 \tinit pose\n");
 
@@ -377,7 +368,7 @@ void OpenManipulatorTeleop::setGoal(char ch)
     setJointSpacePath(joint_name, joint_angle, path_time);
   }
 
-  else if (ch == 'r' || ch == 'R')
+  else if (ch == 'r' || ch == 'R')    // r
   {
     printf("input : r \n \npress 'q' to confirm exit\n");
 
@@ -449,7 +440,6 @@ int main(int argc, char **argv)
   openManipulatorTeleop.printText();
   while (ros::ok() && (ch = std::getchar()) != 'q')
   {
-    printf("ch is: %s", &ch);
     ros::spinOnce();
     openManipulatorTeleop.printText();
     ros::spinOnce();

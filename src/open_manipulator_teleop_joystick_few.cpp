@@ -90,16 +90,17 @@ void OpenManipulatorTeleop::joyCallback(const sensor_msgs::Joy::ConstPtr &msg)
 {
   if (msg->axes.at(7) == 1.0) setGoal("x+");    
   else if (msg->axes.at(7) == -1.0) setGoal("x-");
-  else if (msg->axes.at(6) ==  1.0) setGoal("y+");
-  else if (msg->axes.at(6) == -1.0) setGoal("y-");
+  else if (msg->axes.at(6) ==  -1.0) setGoal("y+");
+  else if (msg->axes.at(6) == 1.0) setGoal("y-");
 
   else if (msg->buttons.at(3) == 1.0) setGoal("z+");
   else if (msg->buttons.at(0) == 1.0) setGoal("z-");
   else if (msg->buttons.at(1) == 1.0) setGoal("clockwise");
   else if (msg->buttons.at(2) == 1.0) setGoal("counter-clockwise");
 
-  else if (msg->axes.at(3) >= 0.1) setGoal("init");
-  else if (msg->axes.at(6) == 1.0) setGoal("rest");
+  // else if (msg->axes.at(1) >= 0.75) setGoal("grasp");
+  else if (msg->buttons.at(6) == 1.0) setGoal("grasp");
+  else if (msg->buttons.at(7) == 1.0) setGoal("init");
 
 
   if (msg->buttons.at(4) == 1.0) setGoal("gripper close");
@@ -274,14 +275,14 @@ void OpenManipulatorTeleop::setGoal(const char* str)
     goalPose.at(1) = -DELTA;
     setTaskSpacePathFromPresentPositionOnly(goalPose, PATH_TIME);
   }
-  else if (str == "y+")   // Left button
+  else if (str == "y+")   // Right button
   {
     printtext();
     printf("increase(++) y axis in cartesian space\n");
     goalPose.at(0) = DELTA;
     setTaskSpacePathFromPresentPositionOnly(goalPose, PATH_TIME);
   }
-  else if (str == "y-")   // Right button
+  else if (str == "y-")   // Left button
   {
     printtext();
     printf("decrease(--) y axis in cartesian space\n");

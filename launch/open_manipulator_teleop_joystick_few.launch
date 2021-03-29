@@ -6,4 +6,5 @@
     <remap from="kinematics_pose" to="$(arg end_effector)/kinematics_pose"/>
     <param name="end_effector_name" value="$(arg end_effector)"/>
   </node>
+  <node name="joy_node" pkg="joy" type="joy_node" />	
 </launch>
