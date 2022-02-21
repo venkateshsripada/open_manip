@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>gui_project</name>
+  <version>2.0.1</version>
+  <description>
+    Provides teleoperation using keyboard for OpenManipulator.
+  </description>
+  <license>Apache 2.0</license>
+  <author email="thlim@robotis.com">Darby Lim</author>
+  <maintainer email="pyo@robotis.com">Pyo</maintainer>
+  <url type="website">http://wiki.ros.org/open_manipulator_teleop</url>
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>message_generation</build_depend>
+  <depend>roscpp</depend>
+  <depend>std_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>open_manipulator_msgs</depend>
+  <depend>darknet_ros_msgs</depend>
+  <build_depend>image_geometry</build_depend>
+  <exec_depend>image_geometry</exec_depend>
+  <exec_depend>message_runtime</exec_depend>
+</package>
