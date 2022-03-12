@@ -1,0 +1,247 @@
+------ 
+Reference from https://www.programmersought.com/article/17541194294/  
+----- 
+
+ 
+
+These 3 driver packages are needed: 
+
+OpenNI-Bin-Dev-Linux-x64-v1.5.7.10 
+
+NITE-Bin-Dev-Linux-x64-v1.5.2.23 
+
+Sensor-Bin-Linux-x64-v5.1.2.1 
+
+ 
+
+So, we follow these steps: 
+
+ 
+
+Xxxxxx  Getting Drivers  xxxxxxx 
+
+ 
+
+>> git clone https://github.com/ZXWBOT/kinect_driver.git 
+
+ 
+
+Now Install dependencies I.e 
+
+ 
+
+>> sudo apt-get install g++ python libusb-1.0-0-dev freeglut3-dev openjdk-8-jdk doxygen graphviz mono-complete  
+
+ 
+
+Now the drivers are loaded 
+
+ 
+
+Xxxxxxx Installation Instructions xxxxxxx 
+
+ 
+
+Copy the whole "kinect_driver" repository that we cloned above from git to /home directory   
+
+ 
+
+>> cd /home/venkatesh/kinect_driver/OpenNI-Bin-Dev-Linux-x64-v1.5.7.10 
+
+ 
+
+>> sudo ./install.sh 
+
+ 
+
+Installing OpemNI 
+
+.. 
+
+. 
+
+. 
+
+***Done*** 
+
+ 
+
+>> cd /home/venkatesh/kinect_driver/NITE-Bin-Dev-Linux-x64-v1.5.2.23 
+
+ 
+
+>> sudo ./install.sh 
+
+ 
+
+Installing NITE 
+
+. 
+
+. 
+
+. 
+
+*** Done *** 
+
+ 
+
+>> cd /home/venkatesh/kinect_driver/Sensor-Bin-Linux-x64-v5.1.2.1 
+
+ 
+
+>> sudo ./install.sh 
+
+ 
+
+Installing PrimeSense Sensor 
+
+. 
+
+. 
+
+. 
+
+*** Done *** 
+
+ 
+
+>> cd home/venkatesh/OpenNI-Bin-Dev-Linux-x64-v1.5.7.10/Samples/Bin/x64-Release 
+
+ 
+
+>> ./NiViewer 
+
+ 
+
+You will see 
+
+ 
+
+One or more of the following nodes could not be enumerated: 
+
+  
+
+Device: PrimeSense/SensorV2/5.1.6.6: The device is not connected! 
+
+Device: PrimeSense/SensorV2/5.1.0.41: The device is not connected! 
+
+Device: PrimeSense/SensorV2/5.1.6.6: The device is not connected! 
+
+Device: PrimeSense/SensorV2/5.1.0.41: The device is not connected! 
+
+  
+
+Press any key to continue . . . 
+
+ 
+
+Do not worry. Open new terminal  
+
+ 
+
+Xxxxxxxxxxxxx Changing permissions xxxxxxxxxxx 
+
+  
+
+>> cd 
+
+ 
+
+You are now in /home/venkatesh 
+
+ 
+
+>> sudo chmod +x /usr/bin/XnSensorServer 
+
+ 
+
+Now connect the Kinect. Make sure that the power and usb are connected 
+Note that only usb 3.0 will work. (Both usbs are 3.0 in my xps 13) 
+
+ 
+
+>> cd home/venkatesh/OpenNI-Bin-Dev-Linux-x64-v1.5.7.10/Samples/Bin/x64-Release 
+
+ 
+
+>> ./NiViewer  
+
+ 
+
+You will see two windows 
+
+1) The kinect acting as camera 
+
+2) A depth image section, but it is only yellow. Depth is still not detected well 
+
+ 
+
+Xxxxxxxxx Install libfreenect xxxxxxxxxxxxxx 
+
+ 
+
+>> git clone https://github.com/OpenKinect/libfreenect.git   
+
+>> cd libfreenect 
+  
+
+>> mkdir build 
+ 
+
+>> cd build 
+ 
+
+>> cmake -L .. 
+  
+
+>> make 
+ 
+
+>> sudo make install 
+
+ 
+
+Now  
+
+>>  cd home/libfreenect/build/bin 
+
+>> sudo ldconfig –v 
+
+ 
+
+Important: To run kinect  
+
+>> cd /home/venkatesh/kinect_driver/libfreenect/build/bin 
+
+ 
+
+Then type >> sudo freenect-glview 
+
+ 
+
+You will now see two windows 
+
+1) Kinect acting as camera 
+
+2) Kinect with depth sensor switched on 
+
+You can observe that the green light on kinect 360 turns red 
+
+ 
+
+I also did  
+
+Git: https://github.com/OpenKinect/libfreenect 
+
+Git: https://github.com/OpenNI/OpenNI 
+
+from 
+
+https://www.kdab.com/setting-up-kinect-for-programming-in-linux-part-1/  
+
+ 
+
+After that in cd /home/venkatesh/ do: 
+
+>> sudo apt install python-freenect 
