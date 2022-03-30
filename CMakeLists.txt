@@ -14,6 +14,8 @@ find_package(catkin REQUIRED COMPONENTS
     std_msgs
     sensor_msgs
     open_manipulator_msgs
+    darknet_ros_msgs
+    image_geometry
     message_generation
 )
 
@@ -24,17 +26,17 @@ find_package(catkin REQUIRED COMPONENTS
 ################################################################################
 # Declare ROS messages, services and actions
 ################################################################################
-## Generate messages in the 'msg' folder
 add_message_files(
   FILES
-  IntArray.msg
+  coordinates.msg
+  uvcoords.msg
 )
+
 
 generate_messages(
   DEPENDENCIES
-  std_msgs  # Or other packages containing msgs
+  std_msgs
 )
-
 ################################################################################
 ## Declare ROS dynamic reconfigure parameters
 ################################################################################
@@ -44,7 +46,7 @@ generate_messages(
 ################################################################################
 catkin_package(
   INCLUDE_DIRS include
-  CATKIN_DEPENDS roscpp std_msgs sensor_msgs open_manipulator_msgs message_runtime
+  CATKIN_DEPENDS roscpp std_msgs sensor_msgs open_manipulator_msgs darknet_ros_msgs image_geometry message_runtime
 )
 
 ################################################################################
@@ -59,25 +61,17 @@ add_executable(open_manipulator_teleop_keyboard src/open_manipulator_teleop_keyb
 add_dependencies(open_manipulator_teleop_keyboard ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(open_manipulator_teleop_keyboard ${catkin_LIBRARIES} )
 
-add_executable(open_manipulator_teleop_keyboard_few src/open_manipulator_teleop_keyboard_few.cpp)
-add_dependencies(open_manipulator_teleop_keyboard_few ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(open_manipulator_teleop_keyboard_few ${catkin_LIBRARIES} )
-
-add_executable(kinect_sub_test src/kinect_sub_test.cpp)
-add_dependencies(kinect_sub_test ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(kinect_sub_test ${catkin_LIBRARIES} )
-
-add_executable(open_manipulator_teleop_keyboard_old src/open_manipulator_teleop_keyboard_old.cpp)
-add_dependencies(open_manipulator_teleop_keyboard_old ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(open_manipulator_teleop_keyboard_old ${catkin_LIBRARIES} )
-
 add_executable(open_manipulator_teleop_joystick src/open_manipulator_teleop_joystick.cpp)
 add_dependencies(open_manipulator_teleop_joystick ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(open_manipulator_teleop_joystick ${catkin_LIBRARIES} )
 
-add_executable(open_manipulator_teleop_joystick_few src/open_manipulator_teleop_joystick_few.cpp)
-add_dependencies(open_manipulator_teleop_joystick_few ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(open_manipulator_teleop_joystick_few ${catkin_LIBRARIES} )
+add_executable(open_manipulator_teleop_gui src/open_manipulator_teleop_gui.cpp)
+add_dependencies(open_manipulator_teleop_gui ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(open_manipulator_teleop_gui ${catkin_LIBRARIES} )
+
+add_executable(open_manipulator_teleop_keyboard_few src/open_manipulator_teleop_keyboard_few.cpp)
+add_dependencies(open_manipulator_teleop_keyboard_few ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(open_manipulator_teleop_keyboard_few ${catkin_LIBRARIES})
 
 ################################################################################
 # Install
@@ -94,6 +88,9 @@ install(DIRECTORY launch
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
+catkin_install_python(PROGRAMS src/moveit_trial.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
 ################################################################################
 # Test
 ################################################################################
